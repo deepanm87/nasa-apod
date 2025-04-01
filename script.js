@@ -11,11 +11,25 @@ const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${co
 let resultsArray = []
 let favorites = {}
 
+function showContent(page) {
+    window.scrollTo({ top: 0, behavior: 'instant'})
+    loader.classList.add('hidden')
+    if(page === 'results') {
+        resultsNav.classList.remove('hidden')
+        favoritesNav.classList.add('hidden')
+    } else {
+        resultsNav.classList.add('hidden')
+        favoritesNav.classList.remove('hidden')
+    }
+    
+}
+
 function createDOMNodes(page) {
     const currentArray = page === 'results' ? resultsArray : Object.values(favorites)
     currentArray.forEach( result => {
         const card = document.createElement('div')
         card.classList.add('card')
+
         const link = document.createElement('a')
         link.href = result.hdurl
         link.title = 'View Full Image'
@@ -29,9 +43,11 @@ function createDOMNodes(page) {
 
         const cardBody = document.createElement('div')
         cardBody.classList.add('card-body')
+
         const cardTitle = document.createElement('h5')
         cardTitle.classList.add('card-title')
         cardTitle.textContent = result.title
+
         const saveText = document.createElement('p')
         saveText.classList.add('clickable')
         if (page === 'results') {
@@ -41,12 +57,16 @@ function createDOMNodes(page) {
             saveText.textContent = 'Remove Favorite'
             saveText.setAttribute('onclick', `removeFavorite('${result.url}')`) 
         }
+
         const cardText = document.createElement('p')
         cardText.textContent = result.explanation
+
         const footer = document.createElement('small')
         footer.classList.add('text-muted')
+
         const date = document.createElement('strong')
         date.textContent = result.date
+        
         const copyrightResult = result.copyright === undefined ? '' : result.copyright
         const copyright = document.createElement('span')
         copyright.textContent = ` ${copyrightResult}`
@@ -65,10 +85,12 @@ function updateDOM(page) {
     }
     imagesContainer.textContent = ''
     createDOMNodes(page)
+    showContent(page)
 
 }
 
 async function getNasaPictures() {
+    loader.classList.remove('hidden')
     try {
         const response = await fetch(apiUrl)
         resultsArray = await response.json()

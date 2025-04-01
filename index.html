@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NASA API pictures</title>
     <link rel="icon" type="image/png" href="https://www.google.com/s2/u/0/favicons?domain=www.nasa.gov">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,18 +16,18 @@
         <div class="navigation-container">
             <span class="background"></span>
                 <span class="navigation-items" id="results-nav">
-                    <h3 class="clickable">Favorites</h3>
+                    <h3 class="clickable" onclick="updateDOM('favorites')">Favorites</h3>
                     <h3>&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;</h3>
-                    <h3 class="clickable">Load More</h3>
+                    <h3 class="clickable" onclick="getNasaPictures()">Load More</h3>
                 </span>
             <span class="navigation-items hidden" id="favorites-nav">
-                <h3 class="clickable">Load More NASA Images</h3>
+                <h3 class="clickable" onclick="getNasaPictures()">Load More NASA Images</h3>
             </span>
         </div>
         <div class="images-container"></div>
     </div>
 
-    <div class="save-confirmed">
+    <div class="save-confirmed" hidden>
         <h1>ADDED!</h1>
     </div>
     <script src="script.js"></script>
